@@ -1,0 +1,82 @@
+---
+- name: Update system packages
+  dnf: name=* state=latest
+- name: Give wheel group passwordless sudo powers 
+  copy: src=./files/sudo-nopass dest=/etc/sudoers.d/ mode=0440
+- name: Install the firt bunch of packages
+  dnf: name={{item}} state=installed
+  with_items:
+  - htop
+  - vim-enhanced
+  - git
+  - ethtool
+  - wget
+  - socat
+  - powerline
+  - tmux-powerline
+  - vim-powerline
+  - unzip 
+  - icedtea-web 
+  - java-openjdk 
+  - gimp 
+  - wine 
+  - youtube-dl 
+  - gnome-tweak-tool 
+  - dconf-editor
+  - inkscape 
+  - p7zip
+
+  #- debug: msg="Hello world 1"
+- name: Set Gitconfig config
+  copy: src=./files/gitconfig dest=/etc/gitconfig
+- name: Increase bash history 
+  copy: src=./files/history.sh dest=/etc/profile.d/history.sh 
+- name: Copy powerline config
+  copy: src=./files/powerline.sh dest=/etc/profile.d/powerline.sh 
+- name: Copy vimrc more config
+  copy: src=./files/vimrc.more dest=/etc/vimrc.more
+- name: Apply vimrc config
+  lineinfile: dest=/etc/vimrc state=present regexp='^source \/etc\/vimrc.more' line='source /etc/vimrc.more'
+- name: Reduce kernel swappiness
+  sysctl: name=vm.swappiness value=5 state=present reload=yes sysctl_file=/etc/sysctl.d/99-sysctl.conf
+- name: Enable RPM repos Fusion and flash
+  dnf: name={{item}} state=installed
+  with_items:
+  - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-25.noarch.rpm
+  - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-25.noarch.rpm
+  - http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+- name: Additional yum repos
+  copy: src={{item}} dest=/etc/yum.repos.d/
+  with_items:
+  - files/google-chrome.repo
+- name: Add skype repo
+  yum_repository:
+    name: Skypeforlinux
+    description: "From https://repo.skype.com/data/skype-stable.repo"
+    baseurl: https://repo.skype.com/rpm/stable/
+    gpgkey: https://repo.skype.com/data/SKYPE-GPG-KEY
+    gpgcheck: yes
+    enabled: yes
+    skip_if_unavailable: yes
+- name: Additional packages
+  dnf: name={{item}} state=installed
+  with_items:
+  - google-chrome-stable
+  - vlc 
+  - flash-plugin
+  - skypeforlinux
+  
+  #- gstreamer-plugins-bad 
+  #- gstreamer-plugins-bad-free-extras 
+  #- gstreamer-plugins-bad-nonfree 
+  #- gstreamer-plugins-ugly 
+  #- gstreamer-ffmpeg 
+  #- gstreamer1-libav 
+  #- gstreamer1-plugins-bad-free-extras 
+  #- gstreamer1-plugins-bad-freeworld 
+  #- gstreamer1-plugins-base-tools 
+  #- gstreamer1-plugins-good-extras 
+  #- gstreamer1-plugins-ugly 
+  #- gstreamer1-plugins-bad-free 
+  #- gstreamer1-plugins-good 
+  #- gstreamer1-plugins-base gstreamer1

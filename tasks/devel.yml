@@ -1,0 +1,8 @@
+---
+- name: Development packages
+  dnf: name={{item}} state=installed
+  with_items:
+  - gnome-builder
+  - gedit-plugins
+  - gnome-sudoku
+  - "@Development Tools"

@@ -1,0 +1,9 @@
+---
+- name: Post Fedora installation
+	strategy: debug
+	gather_facts: no
+	hosts: localhost
+	tasks:
+		-debug: msg="Debug message"
+#    -name: Hello example
+#     command: echo "Hello World"

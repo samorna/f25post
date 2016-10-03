@@ -1,0 +1,8 @@
+---
+- name: This will setup a server with the basic system configuration plus extra packages
+  hosts: all
+  strategy: debug
+  gather_facts: no
+  tasks:
+    - include: tasks/initial.yml
+    - include: tasks/devel.yml

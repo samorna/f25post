@@ -1,0 +1,27 @@
+
+set nocompatible
+set history=50
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set number
+" set list
+set showmatch
+syntax on
+highlight Comment ctermfg=LightCyan
+set wrap
+
+colorscheme delek
+set is 
+set ic 
+set ts=2
+set sw=2 
+let $PYTHONPATH='/usr/lib/python3.5/site-packages'
+set laststatus=2
+
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+set laststatus=2
+set t_Co=256
