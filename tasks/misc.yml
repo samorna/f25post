@@ -1,0 +1,7 @@
+---
+- name: small things I missed 
+  dnf: name={{item}} state=installed
+  with_items:
+  - keychain
+  - keepass
+  - rsync

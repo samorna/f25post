@@ -4,5 +4,6 @@
   strategy: debug
   gather_facts: no
   tasks:
-    - include: tasks/initial.yml
+    #- include: tasks/initial.yml
     - include: tasks/devel.yml
+    #- include: tasks/misc.yml

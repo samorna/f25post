@@ -1,12 +1,13 @@
 ---
 - name: Update system packages
   dnf: name=* state=latest
-- name: Give wheel group passwordless sudo powers 
+- name: Give wheel group passwordless sudo powers
   copy: src=./files/sudo-nopass dest=/etc/sudoers.d/ mode=0440
 - name: Install the firt bunch of packages
   dnf: name={{item}} state=installed
   with_items:
   - htop
+  - calc
   - vim-enhanced
   - git
   - ethtool
@@ -15,24 +16,25 @@
   - powerline
   - tmux-powerline
   - vim-powerline
-  - unzip 
-  - icedtea-web 
-  - java-openjdk 
-  - gimp 
-  - wine 
-  - youtube-dl 
-  - gnome-tweak-tool 
+  - unzip
+  - icedtea-web
+  - java-openjdk
+  - gimp
+  - wine
+  - youtube-dl
+  - gnome-tweak-tool
   - dconf-editor
-  - inkscape 
+  - inkscape
+  - mosh
   - p7zip
 
   #- debug: msg="Hello world 1"
 - name: Set Gitconfig config
   copy: src=./files/gitconfig dest=/etc/gitconfig
-- name: Increase bash history 
-  copy: src=./files/history.sh dest=/etc/profile.d/history.sh 
+- name: Increase bash history
+  copy: src=./files/history.sh dest=/etc/profile.d/history.sh
 - name: Copy powerline config
-  copy: src=./files/powerline.sh dest=/etc/profile.d/powerline.sh 
+  copy: src=./files/powerline.sh dest=/etc/profile.d/powerline.sh
 - name: Copy vimrc more config
   copy: src=./files/vimrc.more dest=/etc/vimrc.more
 - name: Apply vimrc config
@@ -62,21 +64,74 @@
   dnf: name={{item}} state=installed
   with_items:
   - google-chrome-stable
-  - vlc 
+  - vlc
   - flash-plugin
   - skypeforlinux
-  
-  #- gstreamer-plugins-bad 
-  #- gstreamer-plugins-bad-free-extras 
-  #- gstreamer-plugins-bad-nonfree 
-  #- gstreamer-plugins-ugly 
-  #- gstreamer-ffmpeg 
-  #- gstreamer1-libav 
-  #- gstreamer1-plugins-bad-free-extras 
-  #- gstreamer1-plugins-bad-freeworld 
-  #- gstreamer1-plugins-base-tools 
-  #- gstreamer1-plugins-good-extras 
-  #- gstreamer1-plugins-ugly 
-  #- gstreamer1-plugins-bad-free 
-  #- gstreamer1-plugins-good 
+- name: Remove unneeded package
+  dnf: name={{item}} state=absent
+  with_items:
+  - julietaula-montserrat-fonts
+  - thai-scalable-fonts
+  - sil-abyssinica-fonts
+  - lohit-tamil-fonts
+  - lohit-devanagari-fonts
+  - khmeros-base-fonts
+  - tabish-eeyek-fonts
+  - thai-scalable-waree
+  - lklug-fonts stix-fonts
+  - lohit-gurmukhi
+  - smc-meera
+  - sil-nuosu
+  - sil-mingzat
+  - smc-fonts
+  - vlgothic-fonts
+  - lohit-kannada-fonts
+  - naver-nanum-fonts
+  - lohit-odia-fonts
+  - paratype-pt-sans-fonts
+  - naver-nanum-gothic-fonts
+  - lohit-assamese-fonts
+  - sil-padauk-fonts
+  - lklug-fonts
+  - stix-fonts
+  - lohit-bengali-fonts
+  - lohit-gujarati-fonts
+  - lohit-gurmukhi-fonts
+  - lohit-telugu-fonts
+  - sil-mingzat-fonts
+  - sil-nuosu-fonts
+  - thai-scalable-fonts-common
+  - thai-scalable-waree-fonts
+  - google-noto-sans-tai-tham-fonts
+  - google-noto-sans-lisu-fonts
+  - google-noto-sans-mandaic-fonts
+  - google-noto-sans-tagalog-fonts
+  - google-noto-sans-tai-viet-fonts
+  - google-noto-sans-meetei-mayek-fonts
+  - smc-meera-fonts
+  - aajohan-comfortaa-fonts
+  - adobe-source-han-sans-tw-fonts
+  - adobe-source-han-sans-cn-fonts
+  - jomolhari-fonts
+
+#- name: Install gnome extensions
+#  copy: src=./files/gnome-extensions dest=~/.local/share/gnome-shell/extensions
+
+- name: Multimedia packages
+  dnf: name={{item}} state=installed
+  with_items:
+  - gstreamer1-libav
+  #- gstreamer-plugins-bad
+  #- gstreamer-plugins-bad-free-extras
+  #- gstreamer-plugins-bad-nonfree
+  #- gstreamer-plugins-ugly
+  #- gstreamer-ffmpeg
+  #- gstreamer1-libav
+  #- gstreamer1-plugins-bad-free-extras
+  #- gstreamer1-plugins-bad-freeworld
+  #- gstreamer1-plugins-base-tools
+  #- gstreamer1-plugins-good-extras
+  #- gstreamer1-plugins-ugly
+  #- gstreamer1-plugins-bad-free
+  #- gstreamer1-plugins-good
   #- gstreamer1-plugins-base gstreamer1
