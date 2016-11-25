@@ -1,8 +1,6 @@
 ---
- - name: Initial config to dnf
-   raw: echo -e "fastestmirror=1\nmax_parallel_downloads=20" >> /etc/dnf/dnf.conf && dnf install -y --setopt tsflags=nodocs python2 python2-dnf libselinux-python 
-- name: Install ansible
-
+- name: Initial config to dnf
+  raw: echo -e "fastestmirror=1\nmax_parallel_downloads=20" >> /etc/dnf/dnf.conf && dnf install -y --setopt tsflags=nodocs python2 python2-dnf libselinux-python 
 - name: Update system packages
   dnf: name=* state=latest
 - name: Give wheel group passwordless sudo powers
