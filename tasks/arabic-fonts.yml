@@ -1,0 +1,3 @@
+- name: Download and install the Arabic fonts
+  raw: files/arabic-fonts.sh
+

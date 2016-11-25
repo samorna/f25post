@@ -1,6 +1,0 @@
-dnf download --source gcc
-rpmdev-setuptree
-rpm -ivh gcc*.src.rpm
-sudo dnf builddep gcc
-rpmbuild -bp ~/rpmbuild/SPECS/gcc.spec
-rpmbuild -bb ~/rpmbuild/SPECS/gcc.spec

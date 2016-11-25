@@ -3,10 +3,11 @@
   dnf: name=* state=latest
 - name: Give wheel group passwordless sudo powers
   copy: src=./files/sudo-nopass dest=/etc/sudoers.d/ mode=0440
-- name: Install the firt bunch of packages
+- name: Install the fisrt bunch of packages
   dnf: name={{item}} state=installed
   with_items:
   - htop
+  - glances
   - calc
   - vim-enhanced
   - git
@@ -28,7 +29,6 @@
   - mosh
   - p7zip
 
-  #- debug: msg="Hello world 1"
 - name: Set Gitconfig config
   copy: src=./files/gitconfig dest=/etc/gitconfig
 - name: Increase bash history
