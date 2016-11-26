@@ -1,6 +1,9 @@
 ---
-- name: Initial config to dnf
-  raw: echo -e "fastestmirror=1\nmax_parallel_downloads=20" >> /etc/dnf/dnf.conf && dnf install -y --setopt tsflags=nodocs python2 python2-dnf libselinux-python 
+- name: Apply fastmirror and increase parallel download dnf config
+  lineinfile: dest=/etc/dnf/dnf.conf state=present regexp={{item.regexp}} line={{item.line}}
+  with_items:
+  - { regexp: '^fastestmirror=', line: 'fastestmirror=1' }
+  - { regexp: '^max_parallel_downloads=', line: 'max_parallel_downloads=20' }
 - name: Update system packages
   dnf: name=* state=latest
 - name: Give wheel group passwordless sudo powers
@@ -31,7 +34,9 @@
   - mosh
   - p7zip
   - jq
-
+  - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-25.noarch.rpm
+  - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-25.noarch.rpm
+  - http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
 - name: Set Gitconfig config
   copy: src=./files/gitconfig dest=/etc/gitconfig
 - name: Increase bash history
@@ -44,25 +49,11 @@
   lineinfile: dest=/etc/vimrc state=present regexp='^source \/etc\/vimrc.more' line='source /etc/vimrc.more'
 - name: Reduce kernel swappiness
   sysctl: name=vm.swappiness value=5 state=present reload=yes sysctl_file=/etc/sysctl.d/99-sysctl.conf
-- name: Enable RPM repos Fusion and flash
-  dnf: name={{item}} state=installed
-  with_items:
-  - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-25.noarch.rpm
-  - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-25.noarch.rpm
-  - http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
 - name: Additional yum repos
   copy: src={{item}} dest=/etc/yum.repos.d/
   with_items:
   - files/google-chrome.repo
-- name: Add skype repo
-  yum_repository:
-    name: Skypeforlinux
-    description: "From https://repo.skype.com/data/skype-stable.repo"
-    baseurl: https://repo.skype.com/rpm/stable/
-    gpgkey: https://repo.skype.com/data/SKYPE-GPG-KEY
-    gpgcheck: yes
-    enabled: yes
-    skip_if_unavailable: yes
+  - files/skype4linux.repo
 - name: Additional packages
   dnf: name={{item}} state=installed
   with_items:
