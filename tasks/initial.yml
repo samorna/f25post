@@ -108,9 +108,6 @@
   - adobe-source-han-sans-cn-fonts
   - jomolhari-fonts
 
-#- name: Install gnome extensions
-#  copy: src=./files/gnome-extensions dest=~/.local/share/gnome-shell/extensions
-
 - name: Multimedia packages
   dnf: name={{item}} state=installed
   with_items:

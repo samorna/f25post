@@ -3,8 +3,8 @@
   hosts: all
   strategy: debug
   gather_facts: no
+  vars_files:
+    - vars.yml
   tasks:
     - include: tasks/initial.yml
-    - include: tasks/arabic-fonts.yml
-    #- include: tasks/devel.yml
-    #- include: tasks/misc.yml
+    - include: tasks/optional.yml
