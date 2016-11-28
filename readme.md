@@ -28,3 +28,4 @@ Then as a sudo-enabled user run:
 
 `./run.sh`
 
+To enable/disable optional steps edit the flags in vars.yml
