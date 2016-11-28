@@ -22,7 +22,7 @@ To run:
 
 Clone this repository or download the zip file and unzip, then cd into the new folder.
 
-Then as "root" or if your user has sudo power:
+Then as a sudo-enabled user run:
 
 (it may ask for the sudo password twice)
 
